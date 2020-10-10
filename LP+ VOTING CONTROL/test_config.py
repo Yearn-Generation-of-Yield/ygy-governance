@@ -1,16 +1,16 @@
 import pytest
-import brownie
+import ygytest
 
-from brownie import (
-    yVault,
-    yWETH,
-    yDelegatedVault,
+from ygytest import (
+    LPrewardfee,
+    LPStake,
+    LPdex,
 )
 
-VAULTS = [yVault, yWETH, yDelegatedVault]
+LPGOVPARAM = [LPrewardfee, LPStake, LPdex]
 
 
-@pytest.mark.parametrize("Vault", VAULTS)
+@pytest.mark.parametrize("controltest", LPGOVPARAM)
 def test_vault_deployment(gov, token, controller, Vault):
     vault = gov.deploy(Vault, token, controller)
     # Addresses
@@ -18,8 +18,8 @@ def test_vault_deployment(gov, token, controller, Vault):
     assert vault.controller() == controller
     assert vault.token() == token
     # UI Stuff
-    assert vault.name() == "yearn " + token.name()
-    assert vault.symbol() == "y" + token.symbol()
+    assert vault.name() == "YGOY" + token.name()
+    assert vault.symbol() == "YGY" + token.symbol()
     assert vault.decimals() == token.decimals()
 
 
